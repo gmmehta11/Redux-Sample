@@ -12,23 +12,9 @@ export default class FoodForm extends Component {
 
   state = {
     food: null,
-    foodList: [],
-  };
-
-  submitFood = (food) => {
-    this.setState({
-      foodList: [...this.state.foodList, {key: Math.random(), name: food}],
-    });
-  };
-
-  deleteFood = (key) => {
-    this.setState({
-      foodList: [...this.state.foodList.filter((item) => item.key !== key)],
-    });
   };
 
   render() {
-    console.log(this.state.foodList);
     return (
       <View style={styles.container}>
         <Text style={styles.title}> Redux </Text>
@@ -38,19 +24,10 @@ export default class FoodForm extends Component {
           style={styles.foodInput}
           onChangeText={(food) => this.setState({food})}
         />
-        <Button
-          title="Submit"
-          color="black"
-          onPress={() => this.submitFood(this.state.food)}
-        />
+        <Button title="Submit" color="black" onPress={() => {}} />
         <Button
           title="Go to FoodList"
-          onPress={() =>
-            this.props.navigation.navigate('FoodList', {
-              foodList: this.state.foodList,
-              deleteFood: this.deleteFood,
-            })
-          }
+          onPress={() => this.props.navigation.navigate('FoodList')}
         />
       </View>
     );
