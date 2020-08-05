@@ -8,7 +8,7 @@ const foodReducer = (state = initialState, action) => {
     case ADD_FOOD:
       return {
         ...state,
-        foodList: state.foodList.concate({
+        foodList: state.foodList.concat({
           key: Math.random(),
           name: action.data,
         }),

@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 import {ListItem, Icon} from 'react-native-elements';
+import {connect} from 'react-redux';
+import {deleteFood} from './actions/food';
 
-export default class FoodList extends Component {
+class FoodList extends Component {
   static navigationOptions = {
     title: 'FoodList',
     headerTintColor: 'white',
@@ -14,13 +16,21 @@ export default class FoodList extends Component {
     return (
       <FlatList
         style={styles.listContainer}
-        data={}
+        data={this.props.food}
         keyExtractor={(item, index) => item.key.toString()}
         renderItem={(data) => (
           <ListItem
             title={data.item.name}
             bottomDivider
-            rightIcon={<Icon name="delete" size={36} onPress={() => {}} />}
+            rightIcon={
+              <Icon
+                name="delete"
+                size={36}
+                onPress={() => {
+                  this.props.delete(data.item.key);
+                }}
+              />
+            }
           />
         )}
       />
@@ -37,3 +47,18 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
 });
+
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    food: state.foodReducer.foodList,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    delete: (key) => dispatch(deleteFood(key)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FoodList);

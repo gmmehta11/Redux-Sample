@@ -2,7 +2,7 @@ import {createStore, combineReducers} from 'redux';
 import foodReducer from './reducers/foodReducer';
 
 const rootReducer = combineReducers({
-  foods: foodReducer,
+  foodReducer: foodReducer,
 });
 
 const configureStore = () => createStore(rootReducer);

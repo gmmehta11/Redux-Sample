@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {Text, View, TextInput, Button, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
+import {addFood} from './actions/food';
 
-export default class FoodForm extends Component {
+class FoodForm extends Component {
   static navigationOptions = {
     title: 'Home',
     headerTintColor: 'white',
@@ -24,7 +26,13 @@ export default class FoodForm extends Component {
           style={styles.foodInput}
           onChangeText={(food) => this.setState({food})}
         />
-        <Button title="Submit" color="black" onPress={() => {}} />
+        <Button
+          title="Submit"
+          color="black"
+          onPress={() => {
+            this.props.add(this.state.food);
+          }}
+        />
         <Button
           title="Go to FoodList"
           onPress={() => this.props.navigation.navigate('FoodList')}
@@ -54,3 +62,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
+
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    food: state.foodReducer.foodList,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    add: (food) => dispatch(addFood(food)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FoodForm);
